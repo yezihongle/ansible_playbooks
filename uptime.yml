@@ -1,5 +1,5 @@
 - name: Uptime Sample
-  hosts: {{host}}
+  hosts: "{{ host }}"
   tasks:
     - name: uptime
       shell: name=uptime
