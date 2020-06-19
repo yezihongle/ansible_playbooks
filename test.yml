@@ -1,0 +1,4 @@
+- name: Uptime Sample
+  tasks:
+    - name: uptime
+      shell: name=uptime
