@@ -1,5 +1,4 @@
 - name: Uptime Sample
-  hosts: BSU_Monitor_alertmanager
   tasks:
     - name: uptime
       shell: name=uptime
