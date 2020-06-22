@@ -1,0 +1,56 @@
+user                    nginx;
+worker_processes        8;
+pid                     /var/run/nginx.pid;
+worker_rlimit_nofile    1000000;
+events {
+    worker_connections  65535;
+    multi_accept        on;
+    use                 epoll;
+}
+http {
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
+
+    log_format  main  '$remote_addr - $http_x_forwarded_for $remote_user [$time_local] "$request" '
+                      '$status $request_time $body_bytes_sent $bytes_sent "$http_referer" '
+                      '"$http_user_agent" ';
+
+    access_log  /var/log/nginx/access.log  main;
+    error_log                       /var/log/nginx/error.log;
+
+    server_tokens                   off;
+    sendfile                        on;
+    tcp_nopush                      on;
+    tcp_nodelay                     on;
+    reset_timedout_connection       on;
+    open_file_cache_errors          on;
+    ignore_invalid_headers          on;
+
+    server_names_hash_bucket_size   128;
+    send_timeout                    30;
+    keepalive_timeout               20;
+    #keepalive_requests             100000;
+    client_max_body_size            15m;
+    client_body_timeout             30;
+    client_header_timeout           30;
+    client_body_buffer_size         128K;
+    client_header_buffer_size       32k;
+    large_client_header_buffers     4 32k;
+    types_hash_max_size             2048;
+    open_file_cache                 max=100000 inactive=20s;
+    open_file_cache_valid           30s;
+    open_file_cache_min_uses        2;
+
+    gzip                on;
+    gzip_static         on;
+    gzip_vary           on;
+    gzip_proxied        expired no-cache no-store private auth;
+    gzip_types          text/css text/javascript text/xml text/plain text/x-component application/javascript application/x-javascript application/json application/xml  application/rss+xml font/truetype application/x-font-ttf font/opentype application/vnd.ms-fontobject image/svg+xml;
+    gzip_disable        "msie6";
+    gzip_comp_level     2;
+    gzip_min_length     5000;
+    gzip_http_version   1.1;
+    gzip_buffers        16 8k;
+
+    include     /etc/nginx/conf.d/*.conf;
+}

@@ -1,0 +1,6 @@
+
+- name: install nginx in inb
+  hosts: {{ hosts }}
+  become: yes
+  roles:
+  - ansible-role-nginx
