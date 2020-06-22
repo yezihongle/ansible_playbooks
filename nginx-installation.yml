@@ -1,6 +1,10 @@
-
+- name: hell world
+  hosts: "{{ host }}"
+  tasks:
+    name: uptime
+    shell: name=uptime
 - name: install nginx in inb
   hosts: "{{ host }}"
-  become: yes
+  become: no
   roles:
   - ansible-role-nginx
