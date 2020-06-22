@@ -1,8 +1,8 @@
-- name: hell world
+- name: Uptime Sample
   hosts: "{{ host }}"
   tasks:
-    name: uptime
-    shell: name=uptime
+    - name: uptime
+      shell: name=uptime
 - name: install nginx in inb
   hosts: "{{ host }}"
   become: no
